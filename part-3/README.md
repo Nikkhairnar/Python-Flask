@@ -70,7 +70,7 @@ Visit:
 Task: Add email and city to the dictionary and display them on the profile page.
 
 The Python Logic (app.py):
-
+```bash
 @app.route('/profile')
 def profile():
     user_data = {
@@ -86,19 +86,19 @@ def profile():
                            # ... other variables ...
                            city=user_data['city'], # Passed to HTML
                            email=user_data['email']) # Passed to HTML
-
+```
 The HTML Display (profile.html):
-
+```bash
 <div class="profile-item">
     <span>city:</span>{{city}} </div>
 <div class="profile-item">
     <span>email:</span>{{email}} </div>
-
+```
 ## 2. Conditional Enrollment Implementation
 Task: Use an if/else block to show a green "Enrolled" badge or an orange "Not Enrolled" badge.
 
 The HTML Logic (profile.html):
-
+```bash
 <div class="profile-item">
     <span>Status:</span>
     {% if is_enrolled %}
@@ -107,14 +107,14 @@ The HTML Logic (profile.html):
         <span class="badge badge-warning">Not Enrolled</span>
     {% endif %}
 </div>
-
+```
 Proof of implementation: Since you set is_enrolled: False in app.py, the website will currently display the orange "Not Enrolled" badge.
 
 ## 3. Grades Table Implementation
 Task: Create a /grades route and a table that loops through a dictionary of subjects.
 
 The Python Route (app.py):
-
+```bash
 @app.route('/grades')
 def grades():
     student_grades = {
@@ -125,9 +125,9 @@ def grades():
         "Statistics": "B"
     }
     return render_template('grades.html', grades=student_grades) # Passed dict
-
+```
 The HTML Table Loop (grades.html):
-
+```bash
 <table>
     <tr>
         <th>Subject</th>
@@ -141,4 +141,4 @@ The HTML Table Loop (grades.html):
     </tr>
     {% endfor %}
 </table>
-
+```
