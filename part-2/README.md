@@ -57,10 +57,10 @@ Visit:
 2. Create a new page
 -Created templates/contact.html.
 -Added the route in app.py:
-
+```bash
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
-
+```
 3. Add navigation
     Added <nav> links to index.html and about.html so I can click between pages without typing URLs manually.
