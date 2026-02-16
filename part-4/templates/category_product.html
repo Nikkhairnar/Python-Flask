@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category: {{ category_name }} - Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f0f4f8;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        nav {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #edf2f7;
+            border-radius: 5px;
+        }
+        nav a {
+            margin-right: 15px;
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #2b6cb0;
+        }
+        .category-header {
+            margin-bottom: 30px;
+        }
+        .category-badge {
+            background: #9f7aea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            display: inline-block;
+            text-transform: capitalize;
+        }
+        .category-switcher {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .category-switcher-label {
+            font-weight: bold;
+            color: #4a5568;
+            margin-right: 10px;
+        }
+        .category-btn {
+            padding: 10px 20px;
+            border: 2px solid #4299e1;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: capitalize;
+        }
+        .category-btn.active {
+            background: #4299e1;
+            color: white;
+        }
+        .category-btn:not(.active) {
+            background: white;
+            color: #4299e1;
+        }
+        .category-btn:not(.active):hover {
+            background: #ebf8ff;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(66, 153, 225, 0.3);
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .product-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            background: #f7fafc;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            border-color: #4299e1;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .product-card.selected {
+            border-color: #4299e1;
+            background: #ebf8ff;
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+        }
+        .product-card h3 {
+            margin-top: 0;
+            color: #2d3748;
+            font-size: 20px;
+        }
+        .product-id {
+            background: #4299e1;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .product-price {
+            font-size: 24px;
+            color: #48bb78;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .product-link {
+            display: block;
+            margin-top: 15px;
+            padding: 10px;
+            background: #4299e1;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .product-link:hover {
+            background: #3182ce;
+        }
+        .selected-badge {
+            background: #48bb78;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .info-box {
+            background: #f0fff4;
+            border-left: 4px solid #48bb78;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fffaf0;
+            border-left: 4px solid #ed8936;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        code {
+            background: #edf2f7;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('show_links') }}">URL Builder</a>
+            <a href="{{ url_for('product', product_id=1) }}">Products</a>
+            <a href="{{ url_for('category_product', category_name='electronics', product_id=1) }}">Categories</a>
+            <a href="{{ url_for('search', query='demo') }}">Search</a>
+        </nav>
+
+        <div class="category-header">
+            <span class="category-badge">Category: {{ category_name }}</span>
+            {% if is_valid_product %}
+                <span class="selected-badge">Selected: Product #{{ product_id }}</span>
+            {% endif %}
+        </div>
+
+        <!-- Category Switcher -->
+        <div class="category-switcher">
+            <span class="category-switcher-label">Switch Category:</span>
+            <a href="{{ url_for('category_product', category_name='electronics', product_id=1) }}" 
+               class="category-btn {% if category_name == 'electronics' %}active{% endif %}">
+                📱 Electronics
+            </a>
+            <a href="{{ url_for('category_product', category_name='groceries', product_id=3) }}" 
+               class="category-btn {% if category_name == 'groceries' %}active{% endif %}">
+                🛒 Groceries
+            </a>
+        </div>
+
+        <h2>All Products in {{ category_name|capitalize }}</h2>
+        <p>Click on any product to view its details</p>
+
+        {% if category_products %}
+            <div class="products-grid">
+                {% for pid, prod in category_products.items() %}
+                <div class="product-card {% if is_valid_product and pid == product_id %}selected{% endif %}">
+                    <span class="product-id">Product #{{ pid }}</span>
+                    <h3>{{ prod.name }}</h3>
+                    <div class="product-price">₹{{ "{:,}".format(prod.price) }}</div>
+                    <p style="color: #718096; font-size: 14px;">Category: {{ category_name }}</p>
+                    <a href="{{ url_for('category_product', category_name=category_name, product_id=pid) }}" 
+                       class="product-link">
+                        View Details
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if is_valid_product %}
+                <div class="info-box">
+                    <strong>Selected Product Details:</strong>
+                    <p><strong>Name:</strong> {{ selected_product.name }}</p>
+                    <p><strong>Price:</strong> ₹{{ "{:,}".format(selected_product.price) }}</p>
+                    <p><strong>Category:</strong> {{ category_name }}</p>
+                    <p><strong>Product ID:</strong> {{ product_id }}</p>
+                </div>
+            {% endif %}
+
+            <div class="info-box">
+                <strong>Multiple Parameters Route:</strong>
+                <p>The route <code>/category/&lt;category_name&gt;/product/&lt;int:product_id&gt;</code> captures both the category name and product ID.</p>
+                <p>All products shown above belong to the "{{ category_name }}" category.</p>
+            </div>
+        {% else %}
+            <div class="warning-box">
+                <h2>Category Not Found</h2>
+                <p>Sorry, the category "{{ category_name }}" doesn't exist or has no products.</p>
+                <p><strong>Available categories:</strong></p>
+                <ul>
+                    <li><a href="{{ url_for('category_product', category_name='electronics', product_id=1) }}">Electronics</a></li>
+                    <li><a href="{{ url_for('category_product', category_name='groceries', product_id=3) }}">Groceries</a></li>
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if product_id and not is_valid_product %}
+            <div class="warning-box">
+                <strong>⚠️ Note:</strong>
+                <p>Product #{{ product_id }} doesn't exist or doesn't belong to the "{{ category_name }}" category.</p>
+                <p>Please select a product from the list above.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
+

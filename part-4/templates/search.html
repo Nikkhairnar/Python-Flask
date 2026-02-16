@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search: {{ query }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f0f4f8;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        nav {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #edf2f7;
+            border-radius: 5px;
+        }
+        nav a {
+            margin-right: 15px;
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #2b6cb0;
+        }
+        .search-header {
+            background: #ebf8ff;
+            border-left: 4px solid #4299e1;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .search-query {
+            font-size: 24px;
+            color: #2d3748;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .search-form {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .search-form input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .search-form button {
+            padding: 10px 20px;
+            background: #4299e1;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .search-form button:hover {
+            background: #3182ce;
+        }
+        .info-box {
+            background: #f0fff4;
+            border-left: 4px solid #48bb78;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        code {
+            background: #edf2f7;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('show_links') }}">URL Builder</a>
+            <a href="{{ url_for('product', product_id=1) }}">Products</a>
+            <a href="{{ url_for('category_product', category_name='electronics', product_id=1) }}">Categories</a>
+            <a href="{{ url_for('search', query='demo') }}">Search</a>
+        </nav>
+
+        <div class="search-header">
+            <h1>🔍 Search Results</h1>
+            <div class="search-query">Search results for: <strong>{{ query }}</strong></div>
+        </div>
+
+        <div class="search-form">
+            <form action="/search/" method="GET">
+                <input type="text" name="q" placeholder="Enter search query..." value="{{ query }}">
+                <button type="submit">Search</button>
+            </form>
+            <p style="margin-top: 10px; color: #718096; font-size: 14px;">
+                <strong>Note:</strong> Type your search query and click Search, or manually navigate to <code>/search/your-query</code>
+            </p>
+        </div>
+
+        <div class="info-box">
+            <strong>Search Route:</strong>
+            <p>The route <code>/search/&lt;query&gt;</code> captures any text from the URL as a search query.</p>
+            <p><strong>Try these:</strong></p>
+            <ul>
+                <li><a href="/search/laptop">/search/laptop</a></li>
+                <li><a href="/search/electronics">/search/electronics</a></li>
+                <li><a href="/search/groceries">/search/groceries</a></li>
+                <li><a href="/search/my%20custom%20query">/search/my custom query</a></li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 30px; padding: 15px; background: #fffaf0; border-left: 4px solid #ed8936; border-radius: 5px;">
+            <strong>💡 Bonus Feature:</strong>
+            <p>You can use the search form above or type directly in the URL bar!</p>
+        </div>
+    </div>
+</body>
+</html>
+
