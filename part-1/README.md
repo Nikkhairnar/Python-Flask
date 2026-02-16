@@ -53,20 +53,20 @@ Open `http://localhost:5000` in your browser.
 ### Exercises Performed : 
 
 1. Change the return message
-
+```bash
 @app.route('/')
 def home():
     return "Hello Nikk!"
-
+```
 2. Return HTML
-
+```bash
 @app.route('/')
 def home():
     return "<h1>Hello Flask!</h1><p>This is HTML</p>"
-
+```
 3. Add a second route
-
+```bash
 @app.route('/about')
 def about():
     return "This is the about page"
-
+```
