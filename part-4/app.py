@@ -54,7 +54,6 @@ def show_links():
     }
     return render_template('links.html', links=links)
 
-# Exercise 4.1: Product page route
 @app.route('/product/<int:product_id>')
 def product(product_id):
     products = {
@@ -72,8 +71,6 @@ def product(product_id):
         product_id=product_id
     )
 
-
-# Exercise 4.2: Category and product route
 @app.route('/category/<category_name>/product/<int:product_id>')
 def category_product(category_name, product_id):
     # Products dictionary with categories
@@ -103,14 +100,10 @@ def category_product(category_name, product_id):
         is_valid_product=is_valid_product
     )
 
-
-# Exercise 4.3: Search route
 @app.route('/search/<query>')
 def search(query):
     return render_template('search.html', query=query)
 
-
-# Exercise 4.3 Bonus: Search form handler
 @app.route('/search/', methods=['GET'])
 def search_form():
     query = request.args.get('q', '')
@@ -136,22 +129,3 @@ if __name__ == '__main__':
 #
 # =============================================================================
 
-# =============================================================================
-# EXERCISES:
-# =============================================================================
-#
-# Exercise 4.1: Create a product page
-#   - Add route /product/<int:product_id>
-#   - Create a products dictionary with id, name, price
-#   - Display product details or "Not Found" message
-#
-# Exercise 4.2: Category and product route
-#   - Add route /category/<category_name>/product/<int:product_id>
-#   - Display both the category and product information
-#
-# Exercise 4.3: Search route
-#   - Add route /search/<query>
-#   - Display "Search results for: [query]"
-#   - Bonus: Add a simple search form that redirects to this route
-#
-# =============================================================================
